@@ -12,7 +12,7 @@ func getPids(path string) ([]int32, error) {
 
 	d, err := os.Open(path)
 	if err != nil {
-		fmt.Println("Cannot open path: %s", path)
+		fmt.Println("Cannot open path:", path)
 		return nil, err
 	}
 	defer d.Close()
@@ -21,13 +21,12 @@ func getPids(path string) ([]int32, error) {
 
 	fmt.Println("Number of files: ", len(fnames))
 
-	for i, fname := range fnames {
+	for _, fname := range fnames {
 		pid, err := strconv.ParseInt(fname, 10, 32)
 		if err != nil {
-			fmt.Println("Can't get pid from ", fname)
 			continue
 		}
-		fmt.Println("file: %d -> pid: %ld", i, pid)
+		fmt.Println("pid:", pid)
 		ret = append(ret, int32(pid))
 	}
 
